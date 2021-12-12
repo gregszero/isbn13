@@ -4,16 +4,16 @@ require_relative 'ISBN13/version'
 
 module ISBN13
 
-
   # Calculate the check digit for an ISBN13
   # Filters out all non-numeric characters
+  # raise InvalidCodeError if the code is not 12 digits long
   # Multiplies the digits in odd positions by 3
   # Sums the digits
   # Take modulo 10 of the sum and subtract from 10
   # If the result is 10, the check digit is 0
   def self.calculate(isbn)
     isbn = isbn.gsub(/[^0-9]/, '')
-    return nil if isbn.length != 12
+    raise 'ISBN13 code must be 12 digits long' if isbn.length != 12
 
     sum = 0
     isbn.split('').each_with_index do |digit, index|
